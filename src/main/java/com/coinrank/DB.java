@@ -2,8 +2,6 @@ package com.coinrank;
 
 import java.sql.*;
 
-import com.mysql.cj.jdbc.*;
-
 public class DB
 {
 	public Connection conn;
@@ -42,7 +40,7 @@ public class DB
 		return db;
 	}
 	
-	private ResultSet Query(String query) throws SQLException
+	public ResultSet Query(String query) throws SQLException
 	{
 		statement = db.conn.createStatement();
 		ResultSet res = statement.executeQuery(query);
@@ -50,26 +48,11 @@ public class DB
 		return res;
 	}
 	
-	private int Update(String query) throws SQLException
+	public int Update(String query) throws SQLException
 	{
 		statement = db.conn.createStatement();
 		int result = statement.executeUpdate(query);
 		
 		return result;
-	}
-
-	public void CreateHistoryTable(int coin_id)
-	{
-		File file = new File("create_history_table.sql");
-		
-		String query = file.ReadFull().replace("{coin_id}", Integer.toString(coin_id));
-		System.out.println(query);
-		
-		try
-		{
-			this.Update(query);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
 	}
 }
