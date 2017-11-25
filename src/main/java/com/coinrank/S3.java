@@ -12,15 +12,15 @@ import com.amazonaws.services.s3.model.PutObjectRequest;
 
 public class S3
 {
-	private AmazonS3 client;
+	private AmazonS3 m_client;
 	
-	private String bucket = "coinrank";
+	private String m_bucket = "coinrank";
 	
 	public S3()
 	{
 		AWSCredentials credentials = new ProfileCredentialsProvider().getCredentials();
 		
-		this.client = new AmazonS3Client(credentials);
+		this.m_client = new AmazonS3Client(credentials);
 	}
 	
 	public void Save(String filename, String contents)
@@ -40,7 +40,7 @@ public class S3
 			md.setContentLength(contentAsBytes.length);
 			
 			// Upload the file to AWS S3
-			this.client.putObject(new PutObjectRequest(this.bucket, filename, contentsAsStream, md));
+			this.m_client.putObject(new PutObjectRequest(this.m_bucket, filename, contentsAsStream, md));
 		} catch(AmazonServiceException e) {
 			System.out.println(e.getMessage());
 		} catch(Exception e) {

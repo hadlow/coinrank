@@ -7,11 +7,11 @@ import java.io.FileNotFoundException;
 
 public class File
 {
-	private String fileName = "";
+	private String m_fileName = "";
 	
 	public File(String file)
 	{
-		this.fileName = "src/main/resources/" + file;
+		this.m_fileName = "src/main/resources/" + file;
 	}
 	
 	public String ReadFull()
@@ -21,7 +21,7 @@ public class File
 		
 		try
 		{
-			FileReader fileReader = new FileReader(fileName);
+			FileReader fileReader = new FileReader(this.m_fileName);
 			BufferedReader bufferedReader = new BufferedReader(fileReader);
 			
 			while((line = bufferedReader.readLine()) != null)
@@ -29,7 +29,7 @@ public class File
 			
 		    bufferedReader.close();
 		} catch(FileNotFoundException ex) {
-		    System.out.println("Unable to open file '" + fileName + "'");
+		    System.out.println("Unable to open file '" + this.m_fileName + "'");
 		} catch(IOException ex) {
 			ex.printStackTrace();
 		}

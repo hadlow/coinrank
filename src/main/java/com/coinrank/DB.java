@@ -4,29 +4,29 @@ import java.sql.*;
 
 public class DB
 {
-	public Connection conn;
+	public Connection m_connection;
 	
-	private Statement statement;
+	private Statement m_statement;
 	
-	private String url = "jdbc:mysql://localhost:3306/";
+	private String m_url = "jdbc:mysql://localhost:3306/";
 	
-	private String database = "coinrank?allowMultiQueries=true";
+	private String m_database = "coinrank?allowMultiQueries=true";
 	
-	private String driver = "com.mysql.cj.jdbc.Driver";
+	private String m_driver = "com.mysql.cj.jdbc.Driver";
 	
-	private String username = "root";
+	private String m_username = "root";
 	
-	private String password = "";
+	private String m_password = "";
 	
-	public static DB db;
+	public static DB m_db;
 	
 	private DB()
 	{
 		try
 		{
-			Class.forName(driver).newInstance();
+			Class.forName(this.m_driver).newInstance();
 			
-			this.conn = (Connection)DriverManager.getConnection(this.url + this.database, this.username, this.password);
+			this.m_connection = (Connection)DriverManager.getConnection(this.m_url + this.m_database, this.m_username, this.m_password);
 		} catch (Exception sqle) {
 			sqle.printStackTrace();
 		}
@@ -34,25 +34,33 @@ public class DB
 	
 	public static synchronized DB Connect()
 	{
-		if(db == null)
-			db = new DB();
+		if(m_db == null)
+			m_db = new DB();
 		
-		return db;
+		return m_db;
+	}
+	
+	public ResultSet Select(String columns, String table, String attributes) throws SQLException
+	{
+		return this.Query("SELECT " + columns + " FROM " + table + " " + attributes);
+	}
+	
+	public int Insert(String table, String columns, String values) throws SQLException
+	{
+		return this.Update("INSERT INTO " + table + " (" + columns + ") VALUES (" + values + ")");
 	}
 	
 	public ResultSet Query(String query) throws SQLException
 	{
-		statement = db.conn.createStatement();
-		ResultSet res = statement.executeQuery(query);
+		this.m_statement = this.m_db.m_connection.createStatement();
 		
-		return res;
+		return this.m_statement.executeQuery(query);
 	}
 	
 	public int Update(String query) throws SQLException
 	{
-		statement = db.conn.createStatement();
-		int result = statement.executeUpdate(query);
+		this.m_statement = this.m_db.m_connection.createStatement();
 		
-		return result;
+		return this.m_statement.executeUpdate(query);
 	}
 }
