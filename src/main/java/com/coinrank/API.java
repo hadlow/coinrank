@@ -15,7 +15,7 @@ public class API
 {
 	//private String m_tickerURL = "https://api.coinmarketcap.com/v1/ticker/?limit=0";
 	
-	private String m_tickerURL= "https://api.coinmarketcap.com/v1/ticker/?limit=5";
+	private String m_tickerURL= "https://api.coinmarketcap.com/v1/ticker/?limit=6";
 	
 	private String m_historyURL = "https://graphs.coinmarketcap.com/currencies/";
 	
